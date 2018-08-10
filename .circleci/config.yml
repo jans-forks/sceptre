@@ -143,5 +143,7 @@ workflows:
 #            - integration-tests
           filters:
             branches:
+              tags:
+                only: /.*/
 #              only: master
               only: my-doc
