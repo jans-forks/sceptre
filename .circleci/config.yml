@@ -141,9 +141,9 @@ workflows:
           requires:
             - build
 #            - integration-tests
-#          filters:
-#            branches:
-#              tags:
-#                only: /.*/
-##              only: master
-#              only: my-doc
+          filters:
+            branches:
+#              only: master
+              only: my-doc
+            tags:
+              only: /.*/
