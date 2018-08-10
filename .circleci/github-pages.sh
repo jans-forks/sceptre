@@ -51,7 +51,7 @@ echo "Building docs in" ${VERSION_BUILD_DIR}
 # remove version directory if exists
 rm -rf ${VERSION_BUILD_DIR}
 
-# build docs in docs dir
+# build docs in correct dir dir
 sphinx-build ${CODE_DIR}/docs/_source ${VERSION_BUILD_DIR} -q -d /tmp -b html -A GHPAGES=True -a version=${VERSION}
 
 find .
