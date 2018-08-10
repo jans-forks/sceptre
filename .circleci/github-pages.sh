@@ -71,8 +71,13 @@ git add -A
 
 COMMIT_MESSAGE="Update docs ${VERSION} version" # commit sha: ${}
 
+
+
+GH_PAGES_URL="https://${GITHUB_NAME}:${GITHUB_TOKEN}@${WEBSITE_REPO#*"https://"}"
+git remote add website ${GH_PAGES_URL}
+
 git commit -am "${COMMIT_MESSAGE}"
-git push -f origin master
+git push -f website master
 #
 ## switch into the the gh-pages branch
 #if git rev-parse --verify origin/${PAGES_BRANCH} > /dev/null 2>&1
