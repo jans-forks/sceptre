@@ -144,10 +144,10 @@ workflows:
         filters:
           tags:
             only: /.*/
-    - deploy-docs-branch:
-        requires:
-        - build
-        filters:
-          branches:
-            #              only: master
-            only: my-doc
+#    - deploy-docs-branch:
+#        requires:
+#        - build
+#        filters:
+#          branches:
+#            #              only: master
+#            only: my-doc
