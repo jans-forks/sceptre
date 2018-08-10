@@ -213,10 +213,10 @@ intersphinx_mapping = {
     ),
 }
 
-b="."
-import os
-dirs=[item for item in os.scandir(b) if item.is_dir()]
-sdirs=sorted(dirs, reverse=True, key=lambda x: x.name)
-with open(b+"/version-helper.js", "w+") as outf:
-    outf.write("let versions = {};".format([item.name for item in sdirs[:7]]))
-print("\n".join([item.path for item in sdirs[7:]]))
+# b="."
+# import os
+# dirs=[item for item in os.scandir(b) if item.is_dir()]
+# sdirs=sorted(dirs, reverse=True, key=lambda x: x.name)
+# with open(b+"/version-helper.js", "w+") as outf:
+#     outf.write("let versions = {};".format([item.name for item in sdirs[:7]]))
+# print("\n".join([item.path for item in sdirs[7:]]))
