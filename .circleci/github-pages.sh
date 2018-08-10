@@ -10,7 +10,7 @@ ls -laF
 #do
 #    [[ -z "$(eval "echo \$${var_name}")" ]] && { echo "Variable ${var_name} is not set or empty"; exit 1; }
 #done
-
+CODE_DIR=$(pwd)
 GITHUB_NAME=${CIRCLE_USERNAME}
 
 mkdir -p ${DOCS_DIR}
@@ -34,23 +34,27 @@ BUILD_DIR=${DOCS_DIR}/${WEBSITE_DIR}/docs
 
 mkdir -p ${BUILD_DIR}
 
-VERSION_DIR="dev"
+VERSION="dev"
 
-if [[ -n "${CIRCLE_TAG}" ]] && [[ -n "${CIRCLE_SHA1}" ]]; then
+if [[ -n "${CIRCLE_TAG}" ]]; then
     # deploy tagged
     echo "oboje"
     echo ${CIRCLE_TAG}
-    VERSION_DIR="CIRCLE_TAG"
+    VERSION="CIRCLE_TAG"
 
 fi
 
-VERSION_BUILD_DIR=${BUILD_DIR}/${VERSION_DIR}
+VERSION_BUILD_DIR=${BUILD_DIR}/${VERSION}
 
-echo ${VERSION_DIR}
+echo "Building docs in" ${VERSION_BUILD_DIR}
+
+# remove version directory if exists
+rm -rf ${VERSION_BUILD_DIR}
 
 # build docs in docs dir
-#sphinx-build docs/_source ${DOCS_DIR} -q -d /tmp -b html -A GHPAGES=True
+sphinx-build ${CODE_DIR}/docs/_source ${VERSION_BUILD_DIR} -q -d /tmp -b html -A GHPAGES=True -a version=${VERSION}
 
+find .
 # get current sceptre version
 #CURRENT_VERSION=$(python -c "import sceptre; print(sceptre.__version__)")
 #
