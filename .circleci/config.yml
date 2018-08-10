@@ -90,10 +90,13 @@ jobs:
       - run:
           name: 'Build and deploy docs'
           command: |
-            echo "please! duf duf"
             . ./venv/bin/activate
             chmod +x .circleci/github-pages.sh
             ./.circleci/github-pages.sh
+#      - deploy: |
+#            . ./venv/bin/activate
+#            chmod +x .circleci/github-pages.sh
+#            ./.circleci/github-pages.sh
 
   deploy-pypi:
     docker:
