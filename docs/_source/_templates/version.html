@@ -1,0 +1,44 @@
+{% if GHPAGES %}
+    <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: {{ version }}
+      <span class="fa fa-caret-down"></span>
+    </span>
+
+        <div class="rst-other-versions">
+            <dl id="other-versions">
+                <dt>Versions</dt>
+
+                <dd><a href="../stable">stable</a></dd>
+            </dl>
+            <dl>
+                <dt>Links</dt>
+                <dd>
+
+                    <a href="///projects//?fromdocs=">Project Home</a>
+                </dd>
+                <dd>
+                    <a href="///builds//?fromdocs=">Builds</a>
+                </dd>
+            </dl>
+            <hr/>
+            Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>
+                .
+
+        </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                $.getScript("{{ pathto("../version-helper.js") }}").done(
+                    function () {
+                        versions.forEach(function (item, index) {
+                            if (item !== "{{ version }}") {
+                                $('#other-versions').append('<dd><a href="../' + item + '">' + item + "<a/></dd>");
+                            }
+
+                        })
+                    });
+            });
+        </script>
+    </div>
+{% endif %}
