@@ -29,7 +29,7 @@
         </div>
         <script>
             document.addEventListener("DOMContentLoaded", function () {
-                $.getScript("{{ pathto("../version-helper.js") }}").done(
+                $.getScript("{{ pathto("../version-helper.js", 1) }}").done(
                     function () {
                         versions.forEach(function (item, index) {
                             if (item !== "{{ version }}") {
