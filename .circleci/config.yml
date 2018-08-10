@@ -85,8 +85,6 @@ jobs:
           DOCS_DIR: "/home/circleci/docs"
     steps:
 #      - checkout
-      - restore_cache:
-          key: v3-requirements-{{ arch }}-{{ checksum "requirements.txt" }}
       - attach_workspace:
           at: /home/circleci
       - run:

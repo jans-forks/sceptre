@@ -1,6 +1,6 @@
 #!/bin/bash
 # This builds docs from current sceptre version and pushes it to the website with lies in separate repository
-set -e
+set -ex
 # show where we are on the machine
 echo "we are in:" $(pwd)
 
@@ -26,7 +26,7 @@ cd ${DOCS_DIR}
 ######## create correct origin url ########
 # strip everything to github.com
 WEBSITE_REPO="https://github.com/cicd-organisation/project-docs.git"
-WEBSITE_DIR=basename -- ${WEBSITE_REPO%.*}
+WEBSITE_DIR=basename ${WEBSITE_REPO%.*}
 
 # in docs === html/, doctrees/
 
@@ -49,6 +49,7 @@ else
     VERSION_DIR="dev"
 fi
 
+ls -la
 #
 #
 #git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
