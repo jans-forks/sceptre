@@ -16,7 +16,7 @@ GITHUB_NAME=${CIRCLE_USERNAME}
 mkdir -p ${DOCS_DIR}
 
 # build docs in docs dir
-sphinx-build docs/_source ${DOCS_DIR} -b html -A GHPAGES=True
+sphinx-build docs/_source ${DOCS_DIR} -q -b html -A GHPAGES=True
 
 
 #### go to docs dir, setup git and upload the results ####
@@ -26,7 +26,7 @@ cd ${DOCS_DIR}
 ######## create correct origin url ########
 # strip everything to github.com
 WEBSITE_REPO="https://github.com/cicd-organisation/project-docs.git"
-WEBSITE_DIR=basename ${WEBSITE_REPO%.*}
+WEBSITE_DIR=$(basename ${WEBSITE_REPO%.*})
 
 # in docs === html/, doctrees/
 
