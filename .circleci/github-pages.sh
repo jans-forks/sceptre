@@ -54,7 +54,7 @@ rm -rf ${VERSION_BUILD_DIR}
 # build docs in correct dir
 sphinx-build ${CODE_DIR}/docs/_source ${VERSION_BUILD_DIR} -q -d /tmp -b html -A GHPAGES=True -A version=${VERSION}
 
-echo "vuuu"
+echo "vuuu2"
 #find .
 # get current sceptre version
 #CURRENT_VERSION=$(python -c "import sceptre; print(sceptre.__version__)")
