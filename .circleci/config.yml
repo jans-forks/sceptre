@@ -137,18 +137,21 @@ workflows:
     #            tags:
     #              only: /.*/
     #            branches:
-    #              ignore: /^pull\/.*/    asdasdadadasdad
+    #              ignore: /^pull\/.*/
+    # Deploy docs when commit to master
     - deploy-docs-branch:
         requires:
         - build
         filters:
           branches:
-            ignore: my-doc
+#            only: master
+            only: my-doc
+    # Deploy docs when commit is tagged
     - deploy-docs-tag:
         requires:
         - build
         filters:
           tags:
-            only: /.*/
+            only: /^v.*/
           branches:
             ignore: /.*/

@@ -35,14 +35,8 @@ BUILD_DIR=${DOCS_DIR}/${WEBSITE_DIR}/docs
 mkdir -p ${BUILD_DIR}
 
 VERSION="dev"
-
-if [[ -n "${CIRCLE_TAG}" ]]; then
-    # deploy tagged
-    echo "oboje"
-    echo ${CIRCLE_TAG}
-    VERSION="CIRCLE_TAG"
-
-fi
+ # deploy tagged version and strip 'v' from version
+[[ -n "${CIRCLE_TAG}" ]] && VERSION=${CIRCLE_TAG#*v}
 
 VERSION_BUILD_DIR=${BUILD_DIR}/${VERSION}
 
@@ -54,15 +48,31 @@ rm -rf ${VERSION_BUILD_DIR}
 # build docs in correct dir
 sphinx-build ${CODE_DIR}/docs/_source ${VERSION_BUILD_DIR} -q -d /tmp -b html -A GHPAGES=True -A version=${VERSION}
 
-echo "vuuu2"
-#find .
-# get current sceptre version
-#CURRENT_VERSION=$(python -c "import sceptre; print(sceptre.__version__)")
-#
-#
-#git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
-#git config --global user.name "${GITHUB_NAME}" > /dev/null 2>&1
-#
+
+
+# remove old versions
+PYTHON_MAGIC='exec("""\nb="'${BUILD_DIR}'"\nimport os\ndirs=[item for item in os.scandir(b) if item.is_dir()]\nsdirs=sorted(dirs, reverse=True, key=lambda x: x.name)\nwith open(b+"/version-helper.js", "w+") as outf:\n    outf.write("let versions = {};".format([item.name for item in sdirs[:7]]))\nprint(",".join([item.path for item in sdirs[7:]]))\n""")'
+
+OLD_VERSIONS=$(python3 -c "${PYTHON_MAGIC}")
+
+OIFS=${IFS}
+IFS=","
+rm -rf ${OLD_VERSIONS}
+IFS=${OIFS}
+
+# go to site/docs
+cd ${WEBSITE_DIR}
+
+# setup git user
+git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
+git config --global user.name "${GITHUB_NAME}" > /dev/null 2>&1
+
+git add -A
+
+COMMIT_MESSAGE="Update docs ${VERSION} version" # commit sha: ${}
+
+git commit -am "${COMMIT_MESSAGE}"
+git push -f origin master
 #
 ## switch into the the gh-pages branch
 #if git rev-parse --verify origin/${PAGES_BRANCH} > /dev/null 2>&1
