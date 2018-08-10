@@ -138,12 +138,14 @@ workflows:
     #              only: /.*/
     #            branches:
     #              ignore: /^pull\/.*/    asdasdadadasdad
-#    - deploy-docs-tag:
-#        requires:
-#        - build
-#        filters:
+    - deploy-docs-branch:
+        requires:
+        - build
+        filters:
 #          tags:
-#            only: /.*/
+#            ignore: /.*/
+          branches:
+            ignore: my-doc
     - deploy-docs-tag:
         requires:
         - build
