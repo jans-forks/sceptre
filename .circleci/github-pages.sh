@@ -36,19 +36,16 @@ git clone ${WEBSITE_REPO}
 # ensure sceptre-docs exist in website
 mkdir -p WEBSITE_DIR/sceptre-docs
 
-CIRCLE_TAG=1
-CIRCLE_SHA1=""
+VERSION_DIR="dev"
+
 if [[ -n "${CIRCLE_TAG}" ]] && [[ -n "${CIRCLE_SHA1}" ]]; then
     # deploy tagged
     echo "oboje"
     echo ${CIRCLE_TAG}
     VERSION_DIR="tagged"
-else
-    # deploy dev
-    echo "jedno"
-    VERSION_DIR="dev"
 fi
 
+echo ${VERSION_DIR}
 ls -la
 #
 #
