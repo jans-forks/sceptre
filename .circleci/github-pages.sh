@@ -21,8 +21,6 @@ cd ${DOCS_DIR}
 # strip directory from repo path
 WEBSITE_DIR=$(basename ${WEBSITE_REPO%.*})
 
-# in docs === html/, doctrees/
-
 # clone web site
 git clone ${WEBSITE_REPO}
 
