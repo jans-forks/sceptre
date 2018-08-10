@@ -71,28 +71,11 @@ git add -A
 
 COMMIT_MESSAGE="Update docs ${VERSION} version" # commit sha: ${}
 
-
-
 GH_PAGES_URL="https://${GITHUB_NAME}:${GITHUB_TOKEN}@${WEBSITE_REPO#*"https://"}"
 git remote add website ${GH_PAGES_URL}
 
 git commit -am "${COMMIT_MESSAGE}"
 git push -f website master
-#
-## switch into the the gh-pages branch
-#if git rev-parse --verify origin/${PAGES_BRANCH} > /dev/null 2>&1
-#then
-#    git checkout ${PAGES_BRANCH}
-#    # delete any old site as we are going to replace it
-#    # Note: this explodes if there aren't any, so moving it here for now
-#    git rm -rf .
-#else
-#    git checkout --orphan ${PAGES_BRANCH}
-#fi
-#
-#git add -A
-#git commit --allow-empty -m "Deploy to GitHub pages ${CIRCLE_BUILD_NUM} [ci skip]"
-#git push --force --quiet origin ${PAGES_BRANCH}
 
 echo "Finished Deployment!"
 
