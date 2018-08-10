@@ -4,6 +4,7 @@ aliases:
   - image: cloudreach/sceptre-circleci:0.2
     environment:
       DOCS_DIR: "/home/circleci/docs"
+      WEBSITE_REPO: "https://github.com/cicd-organisation/project-docs.git"
   steps:
   - attach_workspace:
       at: /home/circleci

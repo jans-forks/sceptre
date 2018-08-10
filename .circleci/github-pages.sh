@@ -5,7 +5,7 @@ set -ex
 echo "we are in:" $(pwd)
 ls -laF
 # check env vars
-#declare -a vars=(DOCS_DIR GITHUB_EMAIL GITHUB_TOKEN CIRCLE_USERNAME CIRCLE_REPOSITORY_URL CIRCLE_USERNAME CIRCLE_BUILD_NUM)
+#declare -a vars=(DOCS_DIR WEBSITE_REPO GITHUB_EMAIL GITHUB_TOKEN CIRCLE_USERNAME CIRCLE_REPOSITORY_URL CIRCLE_USERNAME CIRCLE_BUILD_NUM)
 #for var_name in "${vars[@]}"
 #do
 #    [[ -z "$(eval "echo \$${var_name}")" ]] && { echo "Variable ${var_name} is not set or empty"; exit 1; }
@@ -21,7 +21,6 @@ cd ${DOCS_DIR}
 
 ######## create correct origin url ########
 # strip everything to github.com
-WEBSITE_REPO="https://github.com/cicd-organisation/project-docs.git"
 WEBSITE_DIR=$(basename ${WEBSITE_REPO%.*})
 
 # in docs === html/, doctrees/
