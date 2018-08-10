@@ -1,152 +1,153 @@
+aliases:
+- &docs-job
+  docker:
+  - image: cloudreach/sceptre-circleci:0.2
+    environment:
+      DOCS_DIR: "/home/circleci/docs"
+  steps:
+  - attach_workspace:
+      at: /home/circleci
+  - run:
+      name: 'Build and deploy docs'
+      command: |
+        . ./venv/bin/activate
+        chmod +x .circleci/github-pages.sh
+        ./.circleci/github-pages.sh
+
 version: 2
 jobs:
   build:
     docker:
-      - image: cloudreach/sceptre-circleci:0.2
+    - image: cloudreach/sceptre-circleci:0.2
     steps:
-      - checkout
-      - run:
-          name: 'Creating Virtualenv'
-          command: virtualenv venv
-      - restore_cache:
-          key: v3-requirements-{{ arch }}-{{ checksum "requirements.txt" }}
-      - run:
-          name: 'Installing Requirements'
-          command: |
-            . ./venv/bin/activate
-            pip install -r requirements.txt
-            pip install awscli
-      - save_cache:
-          key: v3-requirements-{{ arch }}-{{ checksum "requirements.txt" }}
-          paths:
-            - venv
-      - run:
-          name: 'Installing Sceptre'
-          command: |
-            . ./venv/bin/activate
-            pip install .
-      - persist_to_workspace:
-          root: /home/circleci
-          paths:
-            - project
+    - checkout
+    - run:
+        name: 'Creating Virtualenv'
+        command: virtualenv venv
+    - restore_cache:
+        key: v3-requirements-{{ arch }}-{{ checksum "requirements.txt" }}
+    - run:
+        name: 'Installing Requirements'
+        command: |
+          . ./venv/bin/activate
+          pip install -r requirements.txt
+          pip install awscli
+    - save_cache:
+        key: v3-requirements-{{ arch }}-{{ checksum "requirements.txt" }}
+        paths:
+        - venv
+    - run:
+        name: 'Installing Sceptre'
+        command: |
+          . ./venv/bin/activate
+          pip install .
+    - persist_to_workspace:
+        root: /home/circleci
+        paths:
+        - project
   lint-and-unit-tests:
     docker:
-      - image: cloudreach/sceptre-circleci:0.2
+    - image: cloudreach/sceptre-circleci:0.2
     steps:
-      - attach_workspace:
-          at: /home/circleci
-      - restore_cache:
-          key: v4-tox-requirements-{{ arch }}-{{ checksum "requirements.txt" }}-{{ checksum "tox.ini" }}
-      - run:
-          name: 'Linting'
-          command: |
-            . ./venv/bin/activate
-            make lint
-      - run:
-          name: 'Unit Test and Coverage'
-          command: |
-            tox
-      - store_test_results:
-          path: htmlcov
-      - store_test_results:
-          path: htmlcov
-      - store_test_results:
-          path: build/pytest
-      - store_artifacts:
-          path: build/pytest
-      - save_cache:
-          key: v4-tox-requirements-{{ arch }}-{{ checksum "requirements.txt" }}-{{ checksum "tox.ini" }}
-          paths:
-            - .tox
+    - attach_workspace:
+        at: /home/circleci
+    - restore_cache:
+        key: v4-tox-requirements-{{ arch }}-{{ checksum "requirements.txt" }}-{{ checksum "tox.ini" }}
+    - run:
+        name: 'Linting'
+        command: |
+          . ./venv/bin/activate
+          make lint
+    - run:
+        name: 'Unit Test and Coverage'
+        command: |
+          tox
+    - store_test_results:
+        path: htmlcov
+    - store_test_results:
+        path: htmlcov
+    - store_test_results:
+        path: build/pytest
+    - store_artifacts:
+        path: build/pytest
+    - save_cache:
+        key: v4-tox-requirements-{{ arch }}-{{ checksum "requirements.txt" }}-{{ checksum "tox.ini" }}
+        paths:
+        - .tox
   integration-tests:
     parallelism: 2
     docker:
-      - image: cloudreach/sceptre-circleci:0.2
-        environment:
-          AWS_DEFAULT_REGION: eu-west-1
+    - image: cloudreach/sceptre-circleci:0.2
+      environment:
+        AWS_DEFAULT_REGION: eu-west-1
     steps:
-      - attach_workspace:
-          at: /home/circleci
-      - run:
-          name: 'Integration Testing'
-          command: |
-            . ./venv/bin/activate
-            behave --junit \
-                   --junit-directory build/behave \
-                   $(circleci tests glob "integration-tests/features/*.feature" | circleci tests split --split-by=timings)
-      - store_test_results:
-          path: build/behave
-      - store_artifacts:
-          path: build/behave
-  deploy-docs:
-    docker:
-      - image: cloudreach/sceptre-circleci:0.2
-        environment:
-          DOCS_DIR: "/home/circleci/docs"
-    steps:
-#      - checkout
-      - attach_workspace:
-          at: /home/circleci
-      - run:
-          name: 'Build and deploy docs'
-          command: |
-            . ./venv/bin/activate
-            chmod +x .circleci/github-pages.sh
-            ./.circleci/github-pages.sh
-#      - deploy: |
-#            . ./venv/bin/activate
-#            chmod +x .circleci/github-pages.sh
-#            ./.circleci/github-pages.sh
+    - attach_workspace:
+        at: /home/circleci
+    - run:
+        name: 'Integration Testing'
+        command: |
+          . ./venv/bin/activate
+          behave --junit \
+                 --junit-directory build/behave \
+                 $(circleci tests glob "integration-tests/features/*.feature" | circleci tests split --split-by=timings)
+    - store_test_results:
+        path: build/behave
+    - store_artifacts:
+        path: build/behave
+  deploy-docs-branch:
+    *docs-job
+  deploy-docs-tag:
+    *docs-job
 
   deploy-pypi:
     docker:
-      - image: cloudreach/sceptre-circleci:0.2
+    - image: cloudreach/sceptre-circleci:0.2
     steps:
-      - attach_workspace:
-          at: /home/circleci
-      - run:
-          name: 'Create Distributions'
-          command: |
-            . ./venv/bin/activate
-            make dist
-      - run:
-          name: 'Upload Distributions'
-          command: |
-            . ./venv/bin/activate
-            pip install twine
-            twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD dist/*
+    - attach_workspace:
+        at: /home/circleci
+    - run:
+        name: 'Create Distributions'
+        command: |
+          . ./venv/bin/activate
+          make dist
+    - run:
+        name: 'Upload Distributions'
+        command: |
+          . ./venv/bin/activate
+          pip install twine
+          twine upload -u $PYPI_USERNAME -p $PYPI_PASSWORD dist/*
 workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-      - build:
-          filters:
-            tags:
-              only: /.*/
-#      - lint-and-unit-tests: mno?
-#          requires:
-#            - build
-#          filters:
-#            tags:
-#              only: /.*/
-#      - integration-tests:
-#          requires:
-#            - build
-#          filters:
-#            tags:
-#              only: /.*/
-#            branches:
-#              ignore: /^pull\/.*/
-      - deploy-docs:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
-      - deploy-docs:
-          requires:
-          - build
-          filters:
-            branches:
-#              only: master
-              only: my-doc
+    - build:
+        filters:
+          tags:
+            only: /.*/
+    #      - lint-and-unit-tests: mno?
+    #          requires:
+    #            - build
+    #          filters:
+    #            tags:
+    #              only: /.*/
+    #      - integration-tests:
+    #          requires:
+    #            - build
+    #          filters:
+    #            tags:
+    #              only: /.*/
+    #            branches:
+    #              ignore: /^pull\/.*/
+    - deploy-docs-tag:
+        requires:
+        - build
+        filters:
+          tags:
+            only: /.*/
+    - deploy-docs-branch:
+        requires:
+        - build
+        filters:
+          branches:
+            #              only: master
+            only: my-doc
