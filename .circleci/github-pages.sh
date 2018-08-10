@@ -48,8 +48,6 @@ rm -rf ${VERSION_BUILD_DIR}
 # build docs in correct dir
 sphinx-build ${CODE_DIR}/docs/_source ${VERSION_BUILD_DIR} -q -d /tmp -b html -A GHPAGES=True -A version=${VERSION}
 
-
-
 # remove old versions
 PYTHON_MAGIC='exec("""\nb="'${BUILD_DIR}'"\nimport os\ndirs=[item for item in os.scandir(b) if item.is_dir()]\nsdirs=sorted(dirs, reverse=True, key=lambda x: x.name)\nwith open(b+"/version-helper.js", "w+") as outf:\n    outf.write("let versions = {};".format([item.name for item in sdirs[:7]]))\nprint(",".join([item.path for item in sdirs[7:]]))\n""")'
 
@@ -78,11 +76,3 @@ git commit -am "${COMMIT_MESSAGE}"
 git push -f website master
 
 echo "Finished Deployment!"
-
-
-# checkout current scetre +
-# build the current docs
-# checkout doc-repo
-# move current docs to doc-repo
-# update metadata.js
-# commit and push to doc-repo
