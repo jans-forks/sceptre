@@ -18,9 +18,7 @@ mkdir -p ${DOCS_DIR}
 #### go to docs dir, setup git and upload the results ####
 cd ${DOCS_DIR}
 
-
-######## create correct origin url ########
-# strip everything to github.com
+# strip directory from repo path
 WEBSITE_DIR=$(basename ${WEBSITE_REPO%.*})
 
 # in docs === html/, doctrees/
