@@ -31,7 +31,11 @@ mkdir -p ${BUILD_DIR}
 
 VERSION="dev"
  # deploy tagged version and strip 'v' from version
-[[ -n "${CIRCLE_TAG}" ]] && VERSION=${CIRCLE_TAG#*v}
+if [[ -n "${CIRCLE_TAG}" ]]; then
+    VERSION=${CIRCLE_TAG#*v}
+    LATEST_REDIRECT='<meta http-equiv="refresh" content="0; url='${VERSION}'" />'
+    echo ${LATEST_REDIRECT} > ${BUILD_DIR}/index.html
+fi
 
 VERSION_BUILD_DIR=${BUILD_DIR}/${VERSION}
 
