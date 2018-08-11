@@ -36,7 +36,7 @@ if [[ -n "${CIRCLE_TAG}" ]]; then
     LATEST_REDIRECT='<meta http-equiv="refresh" content="0; url='${VERSION}'" />'
     echo ${LATEST_REDIRECT} > ${BUILD_DIR}/index.html
 fi
-# change for tag 1.0.2
+# change for tag 1.0.3
 VERSION_BUILD_DIR=${BUILD_DIR}/${VERSION}
 
 echo "Building docs in" ${VERSION_BUILD_DIR}
