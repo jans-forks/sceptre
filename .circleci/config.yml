@@ -127,20 +127,20 @@ workflows:
           filters:
             tags:
               only: /.*/
-      - lint-and-unit-tests:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
-      - integration-tests:
-          requires:
-            - build
-          filters:
-            tags:
-              only: /.*/
-            branches:
-              ignore: /^pull\/.*/
+#      - lint-and-unit-tests:
+#          requires:
+#            - build
+#          filters:
+#            tags:
+#              only: /.*/
+#      - integration-tests:
+#          requires:
+#            - build
+#          filters:
+#            tags:
+#              only: /.*/
+#            branches:
+#              ignore: /^pull\/.*/
       # Deploy docs when commit to master
       - deploy-docs-branch:
           requires:
