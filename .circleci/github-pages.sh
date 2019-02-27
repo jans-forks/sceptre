@@ -1,4 +1,3 @@
-
 #!/bin/bash
 # This builds docs from current sceptre version and pushes it to the website with lies in separate repository
 set -ex
