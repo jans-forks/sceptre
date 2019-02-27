@@ -123,10 +123,10 @@ workflows:
   version: 2
   build-test-and-deploy:
     jobs:
-#      - build:
-#          filters:
-#            tags:
-#              only: /.*/
+      - build:
+          filters:
+            tags:
+              only: /.*/
 #      - lint-and-unit-tests:
 #          requires:
 #            - build
@@ -143,8 +143,8 @@ workflows:
 #              ignore: /^pull\/.*/
       # Deploy docs when commit to master
       - deploy-docs-branch:
-#          requires:
-#          - build
+          requires:
+          - build
           filters:
             branches:
   #            only: master
@@ -152,8 +152,8 @@ workflows:
               only: feature/rst-doc2
       # Deploy docs when commit is tagged
       - deploy-docs-tag:
-#          requires:
-#          - build
+          requires:
+          - build
           filters:
             tags:
               only: /^v.*/
