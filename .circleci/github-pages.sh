@@ -1,5 +1,6 @@
 #!/bin/bash
 # This builds docs from current sceptre version and pushes it to the website with lies in separate repository
+# hu?
 set -ex
 # show where we are on the machine
 echo "we are in:" $(pwd)
