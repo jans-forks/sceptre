@@ -6,7 +6,7 @@ set -ex
 echo "we are in:" $(pwd)
 ls -laF
 # check env vars
-declare -a vars=(DOCS_DIR WEBSITE_REPO GITHUB_EMAIL GITHUB_TOKEN CIRCLE_USERNAME)
+declare -a vars=(DOCS_DIR DEST_REPO GITHUB_EMAIL GITHUB_TOKEN CIRCLE_USERNAME)
 for var_name in "${vars[@]}"
 do
     [[ -z "$(eval "echo \$${var_name}")" ]] && { echo "Variable ${var_name} is not set or empty"; exit 1; }
@@ -20,13 +20,13 @@ mkdir -p ${DOCS_DIR}
 cd ${DOCS_DIR}
 
 # strip directory from repo path
-WEBSITE_DIR=$(basename ${WEBSITE_REPO%.*})
+DEST_DIR=$(basename ${DEST_REPO%.*})
 
 # clone web site
-git clone ${WEBSITE_REPO}
+git clone ${DEST_REPO}
 
 # ensure sceptre-docs exist in website
-BUILD_DIR=${DOCS_DIR}/${WEBSITE_DIR}/docs
+BUILD_DIR=${DOCS_DIR}/${DEST_DIR}/docs
 
 mkdir -p ${BUILD_DIR}
 
@@ -58,7 +58,7 @@ rm -rf ${OLD_VERSIONS}
 IFS=${OIFS}
 
 # go to site/docs
-cd ${WEBSITE_DIR}
+cd ${DEST_DIR}
 
 # setup git user
 git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
@@ -68,7 +68,7 @@ git add -A
 
 COMMIT_MESSAGE="Update docs version ${VERSION}" # commit sha: ${}
 
-GH_PAGES_URL="https://${GITHUB_NAME}:${GITHUB_TOKEN}@${WEBSITE_REPO#*"https://"}"
+GH_PAGES_URL="https://${GITHUB_NAME}:${GITHUB_TOKEN}@${DEST_REPO#*"https://"}"
 git remote add website ${GH_PAGES_URL}
 
 git commit -am "${COMMIT_MESSAGE}"
