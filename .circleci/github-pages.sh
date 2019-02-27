@@ -49,7 +49,7 @@ sphinx-apidoc -fM -o "${CODE_DIR}/docs/_source/apidoc" ${CODE_DIR}/sceptre
 sphinx-build ${CODE_DIR}/docs/_source ${VERSION_BUILD_DIR} -q -d /tmp -b html -A GHPAGES=True -A version=${VERSION}
 
 # remove old versions
-OLD_VERSIONS=$(python3 old_versions.py "${BUILD_DIR}")
+OLD_VERSIONS=$(python3 "${CODE_DIR}/.circleci/old-versions.py" "${BUILD_DIR}")
 
 OIFS=${IFS}
 IFS=","
