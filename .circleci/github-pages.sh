@@ -22,7 +22,7 @@ GITHUB_NAME=${CIRCLE_USERNAME}
 
 mkdir -p ${CONTAINER_DEST_REPO_DIR}
 
-#### go to docs dir, setup git and upload the results ####
+#### go to docs dir, setup git and upload the results #####
 cd ${CONTAINER_DEST_REPO_DIR}
 
 # strip directory from repo path
