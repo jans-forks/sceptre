@@ -3,9 +3,9 @@ aliases:
   docker:
   - image: cloudreach/sceptre-circleci:0.2
     environment:
-      DOCS_DIR: "/home/circleci/docs"
+      CONTAINER_DEST_REPO_DIR: "/home/circleci/docs"
       # TODO Use real repository when live
-      DEST_REPO: "https://github.com/cicd-organisation/project-docs.git"
+      DEST_REPO: "https://github.com/cicd-organisation/docs.git"
   steps:
   - attach_workspace:
       at: /home/circleci
