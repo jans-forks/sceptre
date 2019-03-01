@@ -67,7 +67,7 @@ IFS=${OIFS}
 cd ${DEST_REPO_DIR_NAME}
 
 # update stable link
-ln -fns ${VERSION} stable
+ln -fns ${VERSION} latest
 
 # setup git user
 git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
