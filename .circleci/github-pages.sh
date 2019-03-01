@@ -41,6 +41,8 @@ VERSION="dev"
 if [[ -n "${CIRCLE_TAG}" ]]; then
     VERSION=${CIRCLE_TAG#*v}
     LATEST_REDIRECT='<meta http-equiv="refresh" content="0; url='${VERSION}'" />'
+    # update stable link
+    ln -fns ${VERSION} latest
     echo ${LATEST_REDIRECT} > ${BUILD_DIR}/index.html
 fi
 
@@ -65,9 +67,6 @@ IFS=${OIFS}
 
 # go to site/docs
 cd ${DEST_REPO_DIR_NAME}
-
-# update stable link
-ln -fns ${VERSION} latest
 
 # setup git user
 git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
