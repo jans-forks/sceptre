@@ -43,6 +43,7 @@ if [[ -n "${CIRCLE_TAG}" ]]; then
     VERSION=${CIRCLE_TAG#*v}
     LATEST_REDIRECT='<meta http-equiv="refresh" content="0; url='${VERSION}'" />'
     # update stable link
+    echo we are: $(pwd)
     ln -fns ${VERSION} latest
     echo ${LATEST_REDIRECT} > ${BUILD_DIR}/index.html
 fi
