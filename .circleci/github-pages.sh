@@ -66,6 +66,9 @@ IFS=${OIFS}
 # go to site/docs
 cd ${DEST_REPO_DIR_NAME}
 
+# update stable link
+ln -fns ${VERSION} stable
+
 # setup git user
 git config --global user.email "${GITHUB_EMAIL}" > /dev/null 2>&1
 git config --global user.name "${GITHUB_NAME}" > /dev/null 2>&1
