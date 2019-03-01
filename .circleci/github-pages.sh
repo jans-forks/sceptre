@@ -36,6 +36,7 @@ BUILD_DIR=${CONTAINER_DEST_REPO_DIR}/${DEST_REPO_DIR_NAME}${RENDERED_DOCS_DIR:+"
 
 mkdir -p ${BUILD_DIR}
 
+# name of the version in master branch
 VERSION="dev"
  # deploy tagged version and strip 'v' from version
 if [[ -n "${CIRCLE_TAG}" ]]; then
