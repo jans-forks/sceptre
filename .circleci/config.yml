@@ -3,8 +3,9 @@ aliases:
     docker:
       - image: cloudreach/sceptre-circleci:0.3
         environment:
-          CONTAINER_DEST_REPO_DIR: "/home/circleci/docs"
-          DEST_REPO: "https://github.com/sceptre/docs.git"
+          REPOSITORY_PATH: "/home/circleci/docs"
+#          DEPLOYMENT_GIT_HTTPS: "https://github.com/sceptre/docs.git"
+          DEPLOYMENT_GIT_SSH: "git@github.com:cicd-organisation/docs.git"
     steps:
       - attach_workspace:
           at: /home/circleci
@@ -152,7 +153,7 @@ workflows:
       - deploy-docs-tag:
           requires:
             - lint-and-unit-tests
-            - integration-tests
+#            - integration-tests
           filters:
             tags:
               only: /^v.*/
