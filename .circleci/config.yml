@@ -19,8 +19,8 @@ aliases:
       - run:
           name: 'Build and deploy docs'
           command: |
-            chmod +x .circleci/circleci-ssh-woraround.sh
-            ./.circleci/circleci-ssh-woraround.sh
+            chmod +x .circleci/add-known-hosts.sh
+            ./.circleci/add-known-hosts.sh
             . ./venv/bin/activate
             chmod +x .circleci/github-pages.sh
             ./.circleci/github-pages.sh
