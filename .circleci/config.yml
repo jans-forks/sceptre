@@ -11,13 +11,15 @@ aliases:
           fingerprints:
             - "37:9f:b9:1c:64:6c:8c:f3:36:83:69:49:21:7d:0f:e4"
             - "d4:57:32:0e:92:a9:ae:c7:af:9c:f0:cc:64:70:83:75"
-            - "SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8"
+            - "36:09:75:e7:b9:c3:ff:50:b5:52:a9:4c:bc:75:d5:36"
+#            - "SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8"
 #            - "SHA256:msDRkp8co/NBG0rOF5Fs59KwPSR+oW9R7wktcTwYrl4"
       - attach_workspace:
           at: /home/circleci
       - run:
           name: 'Build and deploy docs'
           command: |
+            echo homedir: $HOME
             . ./venv/bin/activate
             chmod +x .circleci/github-pages.sh
             ./.circleci/github-pages.sh
