@@ -253,11 +253,11 @@ Examples
    region: {{ command_path.2 }}
    template_bucket_name: {{ environment_variable.TEMPLATE_BUCKET_NAME }}
 
-.. _project_code: #project_code
+.. _project_code: #project-code
 .. _region: #region
 .. _profile: #profile
-.. _required_version: #required_version
-.. _template_bucket_name: #template_bucket_name
-.. _template_key_prefix: #template_key_prefix
+.. _required_version: #required-version
+.. _template_bucket_name: #template-bucket-name
+.. _template_key_prefix: #template-key-prefix
 .. _region which supports CloudFormation: http://docs.aws.amazon.com/general/latest/gr/rande.html#cfn_region
 .. _PEP 440: https://www.python.org/dev/peps/pep-0440/#version-specifiers
